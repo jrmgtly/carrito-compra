@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Carrito de Compras</title>
+
+    <!-- Fuente elegante y estilos modernos -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f4f7fb, #e9eef5);
+            margin: 0;
+            padding: 40px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+
+        th, td {
+            padding: 16px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #2c3e50;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        tr:hover {
+            background-color: #f1f5ff;
+            transition: background-color 0.3s ease;
+        }
+
+        button {
+            background-color: #ff4757;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #e84118;
+            transform: scale(1.05);
+        }
+
+        .btn-secondary {
+            background-color: #3498db;
+        }
+
+        .btn-secondary:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-empty {
+            background-color: #95a5a6;
+        }
+
+        .btn-empty:hover {
+            background-color: #7f8c8d;
+        }
+
+        h3 {
+            text-align: right;
+            margin-top: 20px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+            background-color: #27ae60;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #219150;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            table, tr, th, td {
+                display: block;
+                text-align: left;
+            }
+
+            th {
+                display: none;
+            }
+
+            td {
+                border-bottom: 1px solid #ddd;
+                padding: 10px;
+            }
+
+            .actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            h3 {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h1>🛒 Tu Carrito de Compras</h1>
+
+    <table>
+        <tr>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Subtotal</th>
+            <th>Acción</th>
+        </tr>
+
+        <tr th:each="item : ${carro.select}">
+            <td th:text="${item.articulo.nombre}"></td>
+            <td th:text="${item.cantidad}"></td>
+            <td th:text="${item.articulo.precio}"></td>
+            <td th:text="${#numbers.formatDecimal(item.subtotal, 1, 2)}"></td>
+            <td>
+                <form action="/carro/eliminar" method="post">
+                    <input type="hidden" name="articuloId" th:value="${item.articulo.id}"/>
+                    <button type="submit">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+    <h3>Total: Q<span th:text="${#numbers.formatDecimal(carro.total, 1, 2)}"></span></h3>
+
+    <div class="actions">
+        <form action="/carro/vaciar" method="post">
+            <button class="btn-empty" type="submit">Vaciar carrito</button>
+        </form>
+
+        <a href="/articulos">⬅ Seguir comprando</a>
+    </div>
+</div>
+</body>
+</html>
