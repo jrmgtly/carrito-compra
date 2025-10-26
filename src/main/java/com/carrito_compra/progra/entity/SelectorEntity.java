@@ -14,6 +14,7 @@ public class SelectorEntity {
         this.articulo = articulo;
     }
 
+    //Creacion de constructor vacio
     public SelectorEntity(double v) {
     }
 

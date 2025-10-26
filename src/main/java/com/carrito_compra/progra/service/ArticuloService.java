@@ -12,6 +12,7 @@ public class ArticuloService implements ArticuloInterfaceService{
 
     private final ArticuloRepository articuloRepository;
 
+    //Spring crea e inyecta las instancias de clases / inyecciones de dependencias automaticas
     @Autowired
     public ArticuloService(ArticuloRepository articuloRepository) {
         this.articuloRepository = articuloRepository;

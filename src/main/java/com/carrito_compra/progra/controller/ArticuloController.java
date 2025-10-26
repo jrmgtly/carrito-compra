@@ -17,10 +17,12 @@ public class ArticuloController {
 
     private final ArticuloInterfaceService articuloService;
 
+    //Constructor
     public ArticuloController(ArticuloInterfaceService articuloService){
        this.articuloService = articuloService;
     }
 
+    //El mapeo de la screen de articulos
     @GetMapping
     public String listarArticulos(Model model){
         List<ArticuloEntity>articuloEntities = articuloService.listarArticulos();
@@ -28,15 +30,17 @@ public class ArticuloController {
                 return "articulos";
     }
 
+    //El mapeo de los registros JSON
     @GetMapping("/json")
     @ResponseBody
-    public List<ArticuloEntity>listarArtiulosJson(){
+    public List<ArticuloEntity>listarArticulosJson(){
         return articuloService.listarArticulos();
     }
 
+    //El mapeo de obtener articulo JSON
     @GetMapping("/json/{id}")
     @ResponseBody
-    public ArticuloEntity obtenerProductoJson(@PathVariable Long id){
+    public ArticuloEntity obtenerArticulosJson(@PathVariable Long id){
         return articuloService.obtenerArticuloPorId(id);
     }
 }
